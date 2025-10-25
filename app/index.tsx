@@ -7,7 +7,7 @@ import { save } from '@/secureStore';
 import styles from '@/stylesheets/welcomeScreenStylesheet';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { ActivityIndicator, Alert, TextInput, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Alert, Keyboard, KeyboardAvoidingView, TextInput, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const index = () => {
@@ -38,6 +38,8 @@ const index = () => {
 
 
   return (
+    <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss()}}>
+    <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
     <ThemedView style={{ 
         paddingTop: inset.top, 
         paddingBottom: inset.bottom,
@@ -119,6 +121,8 @@ const index = () => {
 
       </ThemedView>
     </ThemedView>
+    </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   )
 }
 
