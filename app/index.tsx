@@ -24,15 +24,19 @@ const index = () => {
         return;
       }
 
-      setLoading(true);
-      username = username.toLowerCase().trim();
-      createOrFindUser(username)
-      .then((user) => {
+      try {
+        setLoading(true);
+        username = username.toLowerCase().trim();
+        createOrFindUser(username)
+        .then((user) => {
         save('UserId', user.id.toString());
         save('Username', user.name);
       })
       .then(() => router.push('/(tabs)'))
       .finally(() => setLoading(false));
+      } catch (error) {
+        Alert.alert("Login Error", "Error Occured While Loging in, please reload the app and try again")
+      } 
     };
 
 

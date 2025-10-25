@@ -5,9 +5,15 @@ export interface User {
 
 
 export interface Product {
+  id?: number,
   userId: number,
   name: string,
   description?: string,
   imageUri?: string,
   quantity: number = 0
+  price: number
 };
+
+export interface usernameProps {
+  username: string | null;
+}

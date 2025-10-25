@@ -16,7 +16,7 @@ export const addProduct = async ( {userId, name, description, imageUri, quantity
 
 
 // GET
-export const getProductsByUser = async (userId: number) => {
+export const getProductsByUser = async (userId: number) : Promise<Product[]> => {
   const db = await openDB();
 
   const products = await db.getAllAsync(
@@ -24,7 +24,7 @@ export const getProductsByUser = async (userId: number) => {
     [userId]
   );
   
-  return products;
+  return products as Product[];
 };
 
 // DELETE
