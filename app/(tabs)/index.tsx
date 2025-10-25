@@ -10,7 +10,7 @@ import { ITEM_HEIGHT } from '@/stylesheets/ProductCardStylesheet';
 import { Product } from '@/type';
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
-import { ActivityIndicator, Alert, Dimensions, FlatList } from 'react-native';
+import { ActivityIndicator, Dimensions, FlatList } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
@@ -53,7 +53,8 @@ const initialBatch = Math.ceil(height / ITEM_HEIGHT);
             if (isActive) setProducts([]);
           }
         } catch (err: any) {
-          Alert.alert('Error loading products', err.message);
+          alert('Error loading products');
+          console.log(err.message)
         } finally {
           if (isActive) setLoading(false);
         }

@@ -1,103 +1,104 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
 
-import { ExternalLink } from '@/components/external-link';
+import ProductForm from '@/components/ProductForm';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { Collapsible } from '@/components/ui/collapsible';
-import { Fonts } from '@/constants/theme';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
+import { useThemeContext } from '@/context/ThemeContext';
+import { addProduct } from '@/InventoryHubDb/ProductCRUD';
+import { get } from '@/secureStore';
+import styles from '@/stylesheets/addProductStylesheet';
+import { Product } from '@/type';
+import { useState } from 'react';
+import { ScrollView, TouchableOpacity } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+
 
 export default function TabTwoScreen() {
+      const {theme} = useThemeContext();
+      const inset = useSafeAreaInsets();
+      const [loading, setLoading] = useState<Boolean>(false)
+      const [editFormData, setEditFormData] = useState<Partial<Product>>({});
+
+
+      const handleFormChange = (field: keyof Product, value: string | number) => {
+        setEditFormData(prev => ({ ...prev, [field]: value }));
+      };
+
+
+      const handleCreateProduct = async () => {
+        try {
+          setLoading(true);
+
+          const userIdString = await get('UserId');
+          const userId = userIdString ? Number(userIdString) : null;
+
+          if (!editFormData.name || !editFormData.price || !editFormData.quantity) {
+            alert('Please fill out all fields.');
+            return;
+          }
+
+          if(userId !== null){
+            const productData: Product = {
+              name: editFormData.name, 
+              price: editFormData.price,
+              quantity: editFormData.quantity,
+              description: editFormData.description, 
+              imageUri: editFormData.imageUri,       
+              userId, 
+            };
+
+          await addProduct(productData);
+            alert('Product created successfully!');
+            setEditFormData({});
+          }
+
+        } catch (error: any) {
+          console.error('Error creating product:', error.message);
+          alert('Failed to create product. Please try again.');
+        } finally {
+          setLoading(false);
+          }
+      }
+      
+
+
   return (
     <ThemedView
-      style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+      style={{ 
+        ...styles.container,
+        paddingTop: inset.top,
+        paddingBottom: inset.bottom, 
+      }}
     >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText
-          type="title"
-          style={{
-            fontFamily: Fonts.rounded,
-          }}>
-          Explore
-        </ThemedText>
+      <ThemeSwitcher />
+
+      <ThemedView style={styles.formContainer}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <ProductForm
+            product={editFormData as Product}
+            onChange={handleFormChange}
+          />
+
+          <TouchableOpacity
+            style={styles.createButtonTouchableOpacity}
+            onPress={handleCreateProduct}
+          >
+            <ThemedView style={styles.createButton}>
+              <ThemedText 
+                style={styles.createText}
+              >
+                Create Product
+              </ThemedText>
+            </ThemedView>
+          </TouchableOpacity>
+
+        </ScrollView>
+
       </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image
-          source={require('@/assets/images/react-logo.png')}
-          style={{ width: 100, height: 100, alignSelf: 'center' }}
-        />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful{' '}
-          <ThemedText type="defaultSemiBold" style={{ fontFamily: Fonts.mono }}>
-            react-native-reanimated
-          </ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
+
     </ThemedView>
   );
 }
 
-const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-});
+

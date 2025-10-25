@@ -5,6 +5,7 @@ import React from 'react';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { useThemeContext } from '@/context/ThemeContext';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function TabLayout() {
   const { theme } = useThemeContext();
@@ -27,9 +28,11 @@ export default function TabLayout() {
         name="addProduct"
         options={{
           title: 'Add Product',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ color }) => <Ionicons name="add" size={28} color={color} />,
         }}
       />
     </Tabs>
   );
 }
+
+      

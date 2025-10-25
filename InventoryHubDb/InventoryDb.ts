@@ -20,6 +20,7 @@ export const openDB = async () => {
       description TEXT,
       imageUri TEXT,
       quantity INTEGER DEFAULT 0,
+      price REAL DEFAULT 0,
       userId INTEGER,
       FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
     );

@@ -3,19 +3,19 @@ import { openDB } from './InventoryDb';
 
 
 //POST
-export const addProduct = async ( {userId, name, description, imageUri, quantity} : Product
+export const addProduct = async ( {userId, name, description, imageUri, quantity, price} : Product
 ) => {
   const db = await openDB();
 
   await db.runAsync(
-    `INSERT INTO products (name, description, imageUri, quantity, userId)
-     VALUES (?, ?, ?, ?, ?);`,
-    [name, description || null, imageUri || null, quantity, userId]
+    `INSERT INTO products (name, description, imageUri, quantity, price, userId)
+     VALUES (?, ?, ?, ?, ?, ?);`,
+    [name, description || null, imageUri || null, quantity, price || 0, userId]
   );
 };
 
 
-// GET
+// GET PRODUCTS
 export const getProductsByUser = async (userId: number) : Promise<Product[]> => {
   const db = await openDB();
 
@@ -27,6 +27,23 @@ export const getProductsByUser = async (userId: number) : Promise<Product[]> => 
   return products as Product[];
 };
 
+
+//GET PRODUCT BY PRODUCT ID
+export const getProductByProductId = async (
+  userId: number,
+  productId: number
+): Promise<Product | null> => {
+  const db = await openDB();
+
+  const product = await db.getFirstAsync(
+    'SELECT * FROM products WHERE userId = ? AND id = ?;',
+    [userId, productId]
+  );
+
+  return product as Product | null;
+};
+
+
 // DELETE
 export const deleteProduct = async (productId: number) => {
   const db = await openDB();
@@ -35,19 +52,30 @@ export const deleteProduct = async (productId: number) => {
 
 
 //PUT
-export const updateProduct = async (productId: number, updatedProductInfo: Product) => {
+export const updateProduct = async (productId: number, updatedProductInfo: Partial<Product>) => {
   const db = await openDB();
 
-  await db.runAsync(
-    `UPDATE products SET name = ?, description = ?, imageUri = ?, quantity = ? WHERE id = ?;`,
-    [
-      updatedProductInfo.name,
-      updatedProductInfo.description || null,
-      updatedProductInfo.imageUri || null,
-      updatedProductInfo.quantity,
-      productId
-    ]
-  );
+  const existingProduct = await db.getAllAsync('SELECT * FROM products WHERE id = ? LIMIT 1;', [productId]);
 
-  //Alert.alert('Product Updated', `Product "${updatedProductInfo.name}" has been updated successfully.`);
+  if (existingProduct.length === 0) {
+    throw new Error('Product not found');
+  }
+
+  const product = existingProduct[0] as Product; 
+
+  await db.runAsync(
+    `UPDATE products 
+     SET name = ?, description = ?, imageUri = ?, quantity = ?, price = ? 
+     WHERE id = ?;`,
+    [
+      updatedProductInfo.name ?? product.name,
+      updatedProductInfo.description ?? product.description,
+      updatedProductInfo.imageUri ?? product.imageUri,
+      updatedProductInfo.quantity ?? product.quantity,
+      updatedProductInfo.price ?? product.price,
+      productId
+    ].map(value => value === undefined ? null : value) 
+  );
 };
+
+

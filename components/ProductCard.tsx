@@ -8,9 +8,10 @@ import { ThemedText } from './themed-text'
 import { ThemedView } from './themed-view'
 
 const ProductCard = ({ product }: { product: Product }) => {
+   
     const router = useRouter();
     const {theme} = useThemeContext();
-    // 
+    //  
   return (
     <ThemedView style={styles.parent}>
         <TouchableOpacity style={{
@@ -22,7 +23,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         onPress={() =>
             router.push({
                 pathname: "/productDetail/[id]",
-                params: { id: String(product.id) },
+                params: { id: String(product.id) }
             })
         }
         >
@@ -35,7 +36,7 @@ const ProductCard = ({ product }: { product: Product }) => {
                     />
                 </ThemedView>
 
-            )}
+            )} 
             
             <ThemedView style={styles.cardContent}>
                 <ThemedView style={styles.priceContainer}>
@@ -67,7 +68,7 @@ const ProductCard = ({ product }: { product: Product }) => {
                     Product Quantity: {product.quantity}
                 </ThemedText>
 
-                {product.description && (
+                {product.description && ( 
                     <ThemedText
                         numberOfLines={3} 
                         style={{

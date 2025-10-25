@@ -40,7 +40,14 @@
         }
       ],
       "expo-sqlite",
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you select product images.",
+          "cameraPermission": "The app accesses your camera to let you take product photos."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

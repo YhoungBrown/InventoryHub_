@@ -61,6 +61,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 6,
     },
+    continueText: {
+        color: 'white', 
+        fontWeight: 'bold', 
+        fontSize: 16
+    },
     activityIndicator: {
         marginTop: 40,
         justifyContent: 'center',

@@ -27,21 +27,24 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 6 },
         shadowOpacity: 0.5,
         shadowRadius: 10,
+        //backgroundColor: 'transparent'
     },
     cardImageContainer: {
         padding: CARD_PADDING,
         paddingBottom: 4,
+        backgroundColor: 'transparent'
     },
     cardImage: {
         width: '100%',
         height: 180,
-        backgroundColor: '#f0f0f0',
+        backgroundColor: 'transparent',
         borderTopRightRadius: 8,
         borderTopLeftRadius: 8,
     },
     cardContent: {
         padding: CARD_PADDING,
         paddingTop: 10,
+        backgroundColor: 'transparent'
     },
     priceContainer: {
         flexDirection: 'row',

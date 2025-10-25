@@ -115,7 +115,7 @@ const index = () => {
           >
             <ThemedView style={styles.continueButton}>
                <ThemedText 
-                  style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}
+                  style={styles.continueText}
                 >
                   Continue To Inventory
                 </ThemedText>
