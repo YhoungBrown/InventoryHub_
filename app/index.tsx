@@ -34,8 +34,9 @@ const index = () => {
       })
       .then(() => router.push('/(tabs)'))
       .finally(() => setLoading(false));
-      } catch (error) {
+      } catch (error: any) {
         Alert.alert("Login Error", "Error Occured While Loging in, please reload the app and try again")
+        console.log(error.message)
       } 
     };
 

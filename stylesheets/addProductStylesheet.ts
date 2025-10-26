@@ -35,6 +35,11 @@ const styles = StyleSheet.create({
   formContainer: {
     padding: 25,
     backgroundColor: 'transparent'
+  },
+  activityIndicator: {
+    marginTop: 40,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 

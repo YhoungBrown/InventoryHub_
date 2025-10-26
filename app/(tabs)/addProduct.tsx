@@ -9,7 +9,7 @@ import { get } from '@/secureStore';
 import styles from '@/stylesheets/addProductStylesheet';
 import { Product } from '@/type';
 import { useState } from 'react';
-import { ScrollView, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, ScrollView, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
@@ -80,6 +80,16 @@ export default function TabTwoScreen() {
             onChange={handleFormChange}
           />
 
+          {loading ? 
+          (
+            <ActivityIndicator 
+              size='large' 
+              color={theme === 'dark' ? '#C86DD7' : '#4B006E'} 
+              style={styles.activityIndicator} 
+            />
+          ) 
+          : 
+          (
           <TouchableOpacity
             style={styles.createButtonTouchableOpacity}
             onPress={handleCreateProduct}
@@ -92,6 +102,8 @@ export default function TabTwoScreen() {
               </ThemedText>
             </ThemedView>
           </TouchableOpacity>
+
+          )}
 
         </ScrollView>
 
