@@ -5,14 +5,14 @@ export interface User {
 
 
 export interface Product {
-  id?: number,
-  userId: number,
-  name: string,
-  description?: string,
-  imageUri?: string,
-  quantity: number = 0
-  price: number
-};
+  id?: number;
+  name: string;
+  description?: string;
+  imageUri?: string;
+  quantity: number;
+  price: number;
+  userId: number;
+}
 
 export interface usernameProps {
   username: string | null;

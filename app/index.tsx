@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import { ActivityIndicator, Alert, Keyboard, KeyboardAvoidingView, TextInput, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const index = () => {
+  const index = () => {
     const inset = useSafeAreaInsets();
     const {theme} = useThemeContext();
     const [username, setUsername] = useState<string>('');
@@ -18,27 +18,30 @@ const index = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
 
-    const login = (username: string) => {
-      if (username === '') {
-        Alert.alert('Invalid Name', 'Please enter a valid name.');
-        return;
-      }
+    const login = async (username: string) => {
+    if (username === '') {
+      Alert.alert('Invalid Name', 'Please enter a valid name.');
+      return;
+    }
 
-      try {
-        setLoading(true);
-        username = username.toLowerCase().trim();
-        createOrFindUser(username)
-        .then((user) => {
-        save('UserId', user.id.toString());
-        save('Username', user.name);
-      })
-      .then(() => router.push('/(tabs)'))
-      .finally(() => setLoading(false));
-      } catch (error: any) {
-        Alert.alert("Login Error", "Error Occured While Loging in, please reload the app and try again")
-        console.log(error.message)
-      } 
-    };
+    try {
+      setLoading(true);
+      username = username.toLowerCase().trim();
+
+      const user = await createOrFindUser(username);
+
+      await save('UserId', user.id.toString());
+      await save('Username', user.name);
+
+      router.push('/(tabs)');
+    } catch (error: any) {
+      Alert.alert('Login Error', 'Error occurred while logging in. Please reload the app and try again.');
+      console.log(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
 
 
@@ -123,6 +126,7 @@ const index = () => {
             </ThemedView>
         </TouchableOpacity>
         )}
+
 
       </ThemedView>
     </ThemedView>
