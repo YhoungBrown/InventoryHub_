@@ -3,14 +3,14 @@
 
 Below are all the required links needed to view this project.
 
-# Appetize.io preview Link:
+#Appetize.io preview Link:
 
 https://appetize.io/app/b_pbzyyhowv2du5eszhp4wbqjnby
 
-# GitHub Repo:
+#GitHub Repo:
 
 https://github.com/YhoungBrown/InventoryHub_
 
-# Demo Video Link:
+#Demo Video Link:
 
 https://drive.google.com/file/d/1nwv64R4Nk84KI6Pd7Nt2mTg2ia9Qwq6c/view?usp=drivesdk
