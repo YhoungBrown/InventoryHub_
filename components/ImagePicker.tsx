@@ -1,13 +1,11 @@
+import { ImagePickerComponentProps } from '@/type';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
 import { Alert, Image, Platform, TouchableOpacity } from 'react-native';
 import { ThemedText } from './themed-text';
 import { ThemedView } from './themed-view';
 
-interface ImagePickerComponentProps {
-  onImageSelected: (uri: string) => void;
-  currentImageUri?: string;
-}
+
 
 const ImagePickerComponent: React.FC<ImagePickerComponentProps> = ({ 
   onImageSelected, 

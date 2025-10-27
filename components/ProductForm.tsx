@@ -1,16 +1,13 @@
 import { useThemeContext } from '@/context/ThemeContext';
 import styles from '@/stylesheets/FormStyles';
-import { Product } from '@/type';
+import { ProductFormProps } from '@/type';
 import React from 'react';
 import { ScrollView, TextInput } from 'react-native';
 import ImagePickerComponent from './ImagePicker';
 import { ThemedText } from './themed-text';
 import { ThemedView } from './themed-view';
 
-interface ProductFormProps {
-  product: Product;
-  onChange: (field: keyof Product, value: string | number) => void;
-}
+
 
 const ProductForm: React.FC<ProductFormProps> = ({ product, onChange }) => {
   const { theme } = useThemeContext();

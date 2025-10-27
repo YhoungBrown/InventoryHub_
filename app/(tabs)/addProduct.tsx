@@ -21,7 +21,7 @@ export default function AddProductScreen() {
   const [editFormData, setEditFormData] = useState<Partial<Product>>({});
   const [userId, setUserId] = useState<number | null>(null);
 
-  // Load userId whenever the screen is focused
+  
   useFocusEffect(
     useCallback(() => {
       const loadUserId = async () => {

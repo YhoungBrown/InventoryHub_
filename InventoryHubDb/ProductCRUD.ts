@@ -1,24 +1,24 @@
-// InventoryHubDb/ProductCRUD.ts
+
 import { Product } from '@/type';
 import * as SQLite from 'expo-sqlite';
 
-// Keep a single DB instance
+
 let db: SQLite.SQLiteDatabase | null = null;
 
-// Open DB
+
 export const openDB = async () => {
   if (!db) {
     db = await SQLite.openDatabaseAsync('InventoryHub.db');
-    await migrateProductsTable(); // Ensure migration runs
+    await migrateProductsTable(); 
   }
   return db;
 };
 
-// Migration: ensure `products` table exists and has `price` column
+
 const migrateProductsTable = async () => {
   const db = await openDB();
 
-  // Create products table if it doesn't exist
+
   await db.execAsync(`
     CREATE TABLE IF NOT EXISTS products (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,7 +30,7 @@ const migrateProductsTable = async () => {
     );
   `);
 
-  // Check if price column exists
+
   const columns = await db.getAllAsync(`PRAGMA table_info(products);`);
   const hasPrice = columns.some((col: any) => col.name === 'price');
 
@@ -42,7 +42,7 @@ const migrateProductsTable = async () => {
 
 
 
-// ADD PRODUCT
+
 export const addProduct = async (product: Product) => {
   const db = await openDB();
 
@@ -69,7 +69,6 @@ export const addProduct = async (product: Product) => {
 
 
 
-// GET ALL PRODUCTS FOR A USER
 export const getProductsByUser = async (userId: number): Promise<Product[]> => {
   const db = await openDB();
 
@@ -101,7 +100,7 @@ export const getProductsByUser = async (userId: number): Promise<Product[]> => {
 
 
 
-// GET SINGLE PRODUCT BY ID
+
 export const getProductById = async (id: number) => {
   const db = await openDB();
 
@@ -118,7 +117,7 @@ export const getProductById = async (id: number) => {
 };
 
 
-// UPDATE PRODUCT
+
 export const updateProduct = async (product: {
   id: number;
   userId: number;
@@ -174,7 +173,7 @@ export const updateProduct = async (product: {
   }
 };
 
-// DELETE PRODUCT
+
 export const deleteProduct = async (id: number, userId: number) => {
   const db = await openDB();
 

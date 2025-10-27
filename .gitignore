@@ -3,6 +3,10 @@
 # dependencies
 node_modules/
 
+#EAs credentials
+credentials/
+credentials.json
+
 # Expo
 .expo/
 dist/

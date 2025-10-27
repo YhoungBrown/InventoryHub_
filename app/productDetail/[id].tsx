@@ -75,7 +75,7 @@ const ProductDetail = () => {
       Alert.alert('Success', 'Product updated successfully');
       setEditModalVisible(false);
 
-      // Reload updated product with type assertion
+      
       const updatedProduct = (await getProductById(productId)) as Product | null;
       setProduct(updatedProduct);
     } catch (error: any) {

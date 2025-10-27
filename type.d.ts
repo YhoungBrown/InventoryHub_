@@ -17,3 +17,13 @@ export interface Product {
 export interface usernameProps {
   username: string | null;
 }
+
+export interface ImagePickerComponentProps {
+  onImageSelected: (uri: string) => void;
+  currentImageUri?: string;
+}
+
+export interface ProductFormProps {
+  product: Product;
+  onChange: (field: keyof Product, value: string | number) => void;
+}

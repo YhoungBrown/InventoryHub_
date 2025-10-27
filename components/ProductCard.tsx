@@ -11,7 +11,7 @@ const ProductCard = ({ product }: { product: Product }) => {
    
     const router = useRouter();
     const {theme} = useThemeContext();
-    //  
+      
   return (
     <ThemedView style={styles.parent}>
         <TouchableOpacity style={{
